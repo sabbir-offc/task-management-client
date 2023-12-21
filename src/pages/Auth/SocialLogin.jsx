@@ -1,12 +1,40 @@
 import { Github } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import toast from "react-hot-toast";
+import { saveUser } from "../../api/auth";
 
 const SocialLogin = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { socialSign } = useAuth();
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+  const handleSign = async (media) => {
+    try {
+      if (media) {
+        const { user } = await socialSign(media);
+        const userInfo = {
+          name: user?.displayName,
+          email: user?.email,
+          image: user?.photoURL,
+        };
+        await saveUser(userInfo);
+        toast.success("Sign In Successful.");
+        navigate("/");
+      } else {
+        throw new Error("Invalid social media provider.");
+      }
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error);
+    }
+  };
   return (
     <div className="mt-3 space-y-3">
       <button
-        type="button"
+        onClick={() => handleSign(googleProvider)}
         className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
       >
         <span className="mr-2 inline-block">
@@ -24,7 +52,7 @@ const SocialLogin = () => {
           : "Sign in with Google"}
       </button>
       <button
-        type="button"
+        onClick={() => handleSign(githubProvider)}
         className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
       >
         <span className="mr-2 inline-block">

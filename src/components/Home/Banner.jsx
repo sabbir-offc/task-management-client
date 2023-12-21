@@ -39,7 +39,7 @@ export function Banner() {
               {`Click 'Let's Explore' to seamlessly transition to the login page, unlocking a powerful Task Management Dashboard upon entry.`}
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-2">
-              <Link>
+              <Link to={"/login"}>
                 <button
                   type="button"
                   className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"

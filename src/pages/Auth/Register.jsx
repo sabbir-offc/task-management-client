@@ -1,20 +1,39 @@
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../hooks/useAuth";
+import { imageUpload } from "../../api/imageUpload";
+import toast from "react-hot-toast";
+import { saveUser } from "../../api/auth";
 
 export function Register() {
-  const { userRegister } = useAuth();
-
+  const { userRegister, updateUserInfo } = useAuth();
+  const navigate = useNavigate();
   const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
+    const image = form.image.files[0];
     const email = form.email.value;
     const password = form.password.value;
-
-    const user = await userRegister(email, password);
-    console.log(user);
+    const toastId = toast.loading("Account Creating...");
+    try {
+      const { data } = await imageUpload(image);
+      const { user } = await userRegister(email, password);
+      await updateUserInfo(name, data?.display_url);
+      const userInfo = {
+        name: user?.displayName,
+        email: user?.email,
+        image: data?.display_url,
+      };
+      await saveUser(userInfo);
+      toast.success("Account created Successfully.", {
+        id: toastId,
+      });
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message, { id: toastId });
+    }
   };
   return (
     <section className="bg-white p-2">
@@ -28,7 +47,10 @@ export function Register() {
           </h2>
           <p className="mt-2 text-base text-gray-600">
             Already have an account?{" "}
-            <Link className="font-medium text-black transition-all duration-200 hover:underline">
+            <Link
+              to={"/login"}
+              className="font-medium text-black transition-all duration-200 hover:underline"
+            >
               Sign In
             </Link>
           </p>
@@ -50,6 +72,22 @@ export function Register() {
                     id="name"
                     name="name"
                   ></input>
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="image"
+                  className="text-base font-medium text-gray-900"
+                >
+                  {" "}
+                  Upload your image{" "}
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="file"
+                    name="image"
+                    className="file-input w-full"
+                  />
                 </div>
               </div>
               <div>

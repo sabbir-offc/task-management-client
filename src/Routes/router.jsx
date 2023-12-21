@@ -7,6 +7,8 @@ import Dashboard from "../Layout/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoutes";
 import AddTask from "../pages/Dashboard/AddTask";
 import Todo from "../pages/Dashboard/Todo";
+import UpdateTask from "../pages/Dashboard/UpdateTask";
+import { getSingleTask } from "../api/user";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +43,11 @@ const router = createBrowserRouter([
       {
         path: "tasks",
         element: <Todo />,
+      },
+      {
+        path: "update/:id",
+        element: <UpdateTask />,
+        loader: ({ params }) => getSingleTask(params.id),
       },
     ],
   },

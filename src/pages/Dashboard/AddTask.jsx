@@ -2,12 +2,16 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { saveTask } from "../../api/user";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { Loader } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 const AddTask = () => {
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
@@ -19,15 +23,21 @@ const AddTask = () => {
     const taskInfo = {
       email: user?.email,
       title,
+      status: "todo",
       description,
       deadline,
       priority,
     };
     try {
+      setLoading(true);
       const dbRes = await saveTask(taskInfo);
       if (dbRes.acknowledged) return toast.success("Task Added Successfully.");
-      reset();
-    } catch (error) {}
+      navigate("/dashboard/tasks");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div className="p-5">
@@ -131,7 +141,7 @@ const AddTask = () => {
           type="submit"
           className="bg-[#5F8670] py-3 rounded-md mx-auto w-full text-white font-bold"
         >
-          Add Task
+          {loading ? <Loader className="animate-spin m-auto" /> : "Add Task"}
         </button>
       </form>
     </div>

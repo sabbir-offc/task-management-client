@@ -5,7 +5,7 @@ import useAuth from "./useAuth";
 const useAllTasks = () => {
   const { user } = useAuth();
   const {
-    data: tasks,
+    data: tasks = [],
     isLoading,
     refetch,
   } = useQuery({

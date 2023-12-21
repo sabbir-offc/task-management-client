@@ -25,21 +25,19 @@ const Sidebar = () => {
           <Home size={24} />
         </Link>
 
-        <Link className="rounded-lg p-1.5 text-gray-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none">
+        <Link
+          to={"/dashboard/add-task"}
+          className="rounded-lg p-1.5 text-gray-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none"
+        >
           <CalendarPlus size={24} />
         </Link>
 
-        <Link className="rounded-lg p-1.5 text-gray-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none">
+        <Link
+          to={"/dashboard/manage-tasks"}
+          className="rounded-lg p-1.5 text-gray-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none"
+        >
           <LayoutList size={24} />
         </Link>
-
-        <a className="rounded-lg p-1.5 text-gray-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none">
-          <Bookmark size={24} />
-        </a>
-
-        <a className="rounded-lg p-1.5 text-gray-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none">
-          <Users size={24} />
-        </a>
       </nav>
 
       <div draggable className="flex flex-col items-center space-y-6">

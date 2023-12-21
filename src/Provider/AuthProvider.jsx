@@ -13,7 +13,7 @@ import { clearCookie, getToken } from "../api/auth";
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   const socialSign = (socialProvider) => {
@@ -72,6 +72,7 @@ const AuthProvider = ({ children }) => {
     updateUserInfo,
     socialSign,
   };
+  console.log(loading);
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

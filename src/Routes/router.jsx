@@ -5,6 +5,8 @@ import { Register } from "../pages/Auth/Register";
 import { Login } from "../pages/Auth/Login";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoutes";
+import AddTask from "../pages/Dashboard/AddTask";
+import Todo from "../pages/Dashboard/Todo";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,11 +17,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
     ],
@@ -31,6 +33,16 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "add-task",
+        element: <AddTask />,
+      },
+      {
+        path: "tasks",
+        element: <Todo />,
+      },
+    ],
   },
 ]);
 

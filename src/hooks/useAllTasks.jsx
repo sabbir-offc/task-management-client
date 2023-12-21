@@ -15,6 +15,7 @@ const useAllTasks = () => {
       return res;
     },
   });
+
   return { tasks, isLoading, refetch };
 };
 

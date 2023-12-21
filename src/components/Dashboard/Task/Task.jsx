@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 
-const Task = ({ task, tasks, handleDeleteTask }) => {
+const Task = ({ task, handleDeleteTask }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "task",
     item: { id: task?._id },
@@ -11,7 +11,6 @@ const Task = ({ task, tasks, handleDeleteTask }) => {
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  //   console.log(isDragging);
   return (
     <tr
       key={task._id}

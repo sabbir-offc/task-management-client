@@ -1,26 +1,46 @@
 import useAllTasks from "../../hooks/useAllTasks";
 import Loader from "../../components/shared/Loader";
 
-import { deleteTask } from "../../api/user";
+import { deleteTask, saveNotifications } from "../../api/user";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import TableHead from "../../components/Dashboard/Task/TableHead";
 
+import useAuth from "../../hooks/useAuth";
+
 const Todo = () => {
-  const { tasks, isLoading, refetch } = useAllTasks();
+  const { tasks, refetch } = useAllTasks();
+  const { user } = useAuth();
   const [todos, setTodos] = useState([]);
   const [onGoing, setOngoing] = useState([]);
   const [completed, setCompleted] = useState([]);
-  isLoading && <Loader />;
-
   useEffect(() => {
     const todos = tasks?.filter((task) => task?.status === "todo");
     const onGoing = tasks?.filter((task) => task?.status === "onGoing");
     const completed = tasks?.filter((task) => task?.status === "completed");
-    setOngoing(onGoing);
     setTodos(todos);
+    setOngoing(onGoing);
     setCompleted(completed);
-  }, [tasks]);
+    tasks?.map((task) => {
+      const deadlineDate = new Date(task.deadline);
+      const currentDate = new Date();
+
+      if (deadlineDate < currentDate || task) {
+        // Task deadline is overdue
+        const notificationMessage = `Task deadline for ${task.title} is overdue.`;
+
+        const notification = {
+          taskId: task?._id,
+          notificationMessage,
+          email: user?.email,
+        };
+        // Show toast notification
+        console.log(task);
+        // Save notification to the "notifications" route
+        return saveNotifications(notification);
+      }
+    });
+  }, [tasks, user]);
   const handleDeleteTask = async (id) => {
     try {
       Swal.fire({
@@ -54,7 +74,7 @@ const Todo = () => {
 
   return (
     <div>
-      <div className="grid  md:grid-cols-12 p-5 gap-1">
+      <div className="flex  flex-wrap justify-around p-5 gap-4">
         {statuses?.map((status, idx) => (
           <TableHead
             handleDeleteTask={handleDeleteTask}

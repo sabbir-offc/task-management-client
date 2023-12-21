@@ -5,8 +5,6 @@ import { RouterProvider } from "react-router-dom";
 import router from "./Routes/router.jsx";
 import AuthProvider from "./Provider/AuthProvider.jsx";
 import { Toaster } from "react-hot-toast";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 

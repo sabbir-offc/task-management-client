@@ -38,3 +38,17 @@ export const updateTaskStatus = async (id, status) => {
     const { data } = await axiosSecure.patch(`/status/${id}`, { status });
     return data;
 }
+
+
+//save notifications 
+export const saveNotifications = async (notification) => {
+    const { data } = await axiosSecure.put(`/notification/${notification?.taskId}`, notification);
+    return data;
+}
+
+
+//get notifations 
+export const getNotifications = async (email) => {
+    const { data } = await axiosSecure(`/notifications/${email}`);
+    return data;
+}

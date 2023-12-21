@@ -2,6 +2,7 @@ import { useDrop } from "react-dnd";
 import Task from "./Task";
 import { updateTaskStatus } from "../../../api/user";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
 const TableHead = ({
   status,
@@ -39,7 +40,10 @@ const TableHead = ({
 
   const updateStatus = async (id, status) => {
     const dbRes = await updateTaskStatus(id, status);
-    if (dbRes.modifiedCount > 0) return refetch();
+    if (dbRes.modifiedCount > 0) {
+      refetch();
+      toast.success(`Task status updated to ${status}`);
+    }
   };
   return (
     <div

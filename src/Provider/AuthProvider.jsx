@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -73,7 +72,6 @@ const AuthProvider = ({ children }) => {
     updateUserInfo,
     socialSign,
   };
-  console.log(user);
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

@@ -52,3 +52,16 @@ export const getNotifications = async (email) => {
     const { data } = await axiosSecure(`/notifications/${email}`);
     return data;
 }
+
+//delete a notification 
+export const deleteNotification = async (id) => {
+    const { data } = await axiosSecure.delete(`/deleteNotification/${id}`)
+    return data;
+}
+
+
+//get single user data
+export const getProfileData = async (email) => {
+    const { data } = await axiosSecure(`/user/${email}`);
+    return data;
+}

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import TableHead from "../../components/Dashboard/Task/TableHead";
 
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import useNotifications from "../../hooks/useNotifications";
 
 const Todo = () => {
   const { tasks, refetch } = useAllTasks();
@@ -14,33 +16,41 @@ const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [onGoing, setOngoing] = useState([]);
   const [completed, setCompleted] = useState([]);
+  const { refetch: notifyRef } = useNotifications();
   useEffect(() => {
-    const todos = tasks?.filter((task) => task?.status === "todo");
-    const onGoing = tasks?.filter((task) => task?.status === "onGoing");
-    const completed = tasks?.filter((task) => task?.status === "completed");
-    setTodos(todos);
-    setOngoing(onGoing);
-    setCompleted(completed);
-    tasks?.map((task) => {
-      const deadlineDate = new Date(task.deadline);
-      const currentDate = new Date();
+    const processTasks = async () => {
+      const todos = tasks?.filter((task) => task?.status === "todo");
+      const onGoing = tasks?.filter((task) => task?.status === "onGoing");
+      const completed = tasks?.filter((task) => task?.status === "completed");
+      setTodos(todos);
+      setOngoing(onGoing);
+      setCompleted(completed);
 
-      if (deadlineDate < currentDate || task) {
-        // Task deadline is overdue
-        const notificationMessage = `Task deadline for ${task.title} is overdue.`;
+      for (const task of tasks || []) {
+        const deadlineDate = new Date(task.deadline);
+        const currentDate = new Date();
 
-        const notification = {
-          taskId: task?._id,
-          notificationMessage,
-          email: user?.email,
-        };
-        // Show toast notification
-        console.log(task);
-        // Save notification to the "notifications" route
-        return saveNotifications(notification);
+        if (deadlineDate < currentDate) {
+          // Task deadline is overdue
+          const notificationMessage = `Task deadline for ${task.title} is overdue.`;
+
+          const notification = {
+            taskId: task?._id,
+            notificationMessage,
+            email: user?.email,
+          };
+
+          const dbRes = await saveNotifications(notification);
+          if (dbRes.upsertedId) {
+            notifyRef();
+            toast.error(notificationMessage);
+          }
+        }
       }
-    });
-  }, [tasks, user]);
+    };
+
+    processTasks();
+  }, [tasks, user, notifyRef]);
   const handleDeleteTask = async (id) => {
     try {
       Swal.fire({

@@ -1,9 +1,19 @@
-import { Home, LogOut, CalendarPlus, LayoutList, Bell } from "lucide-react";
+import {
+  Home,
+  LogOut,
+  CalendarPlus,
+  LayoutList,
+  Bell,
+  UserRoundCog,
+} from "lucide-react";
 import useAuth from "../../hooks/useAuth";
 import { Link, useLocation } from "react-router-dom";
+import useNotifications from "../../hooks/useNotifications";
 
 const Sidebar = () => {
   const { user, logOut } = useAuth();
+
+  const { notifications } = useNotifications();
 
   const location = useLocation();
   const menus = [
@@ -17,8 +27,8 @@ const Sidebar = () => {
       icon: <LayoutList size={24} />,
     },
     {
-      path: "/dashboard/notifications",
-      icon: <Bell size={24} />,
+      path: "/dashboard/profile",
+      icon: <UserRoundCog size={24} />,
     },
   ];
 
@@ -35,6 +45,17 @@ const Sidebar = () => {
           {menu.icon}
         </Link>
       ))}
+      <Link
+        to={"/dashboard/notifications"}
+        className={`p-1.5 ${
+          location.pathname === "/dashboard/notifications" ? "active" : ""
+        }  text-gray-700 tab relative transition-colors duration-200 hover:bg-gray-100 focus:outline-none`}
+      >
+        <Bell size={24} />
+        <span className="absolute left-1/2 bottom-4 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+          {notifications?.length}
+        </span>
+      </Link>
     </div>
   );
 };

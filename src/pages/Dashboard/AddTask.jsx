@@ -31,7 +31,7 @@ const AddTask = () => {
     try {
       setLoading(true);
       const dbRes = await saveTask(taskInfo);
-      if (dbRes.acknowledged) return toast.success("Task Added Successfully.");
+      if (dbRes.acknowledged) toast.success("Task Added Successfully.");
       navigate("/dashboard/tasks");
     } catch (error) {
       toast.error(error.message);

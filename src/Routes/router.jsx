@@ -10,6 +10,7 @@ import Todo from "../pages/Dashboard/Todo";
 import UpdateTask from "../pages/Dashboard/UpdateTask";
 import { getSingleTask } from "../api/user";
 import Notifications from "../pages/Dashboard/Notifications";
+import Profile from "../pages/Dashboard/Profile";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "tasks",
         element: <Todo />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
       {
         path: "update/:id",

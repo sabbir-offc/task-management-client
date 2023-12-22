@@ -44,33 +44,49 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: (
-      <PrivateRoute>
-        <Dashboard />
-      </PrivateRoute>
-    ),
+    element: <Dashboard />,
     errorElement: <Error />,
     children: [
       {
         path: "add-task",
-        element: <AddTask />,
+        element: (
+          <PrivateRoute>
+            <AddTask />
+          </PrivateRoute>
+        ),
       },
       {
         path: "tasks",
-        element: <Todo />,
+        element: (
+          <PrivateRoute>
+            <Todo />
+          </PrivateRoute>
+        ),
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "update/:id",
-        element: <UpdateTask />,
+        element: (
+          <PrivateRoute>
+            <UpdateTask />
+          </PrivateRoute>
+        ),
         loader: ({ params }) => getSingleTask(params.id),
       },
       {
         path: "notifications",
-        element: <Notifications />,
+        element: (
+          <PrivateRoute>
+            <Notifications />
+          </PrivateRoute>
+        ),
       },
     ],
   },

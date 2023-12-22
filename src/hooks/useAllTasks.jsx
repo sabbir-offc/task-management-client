@@ -11,7 +11,7 @@ const useAllTasks = () => {
   } = useQuery({
     queryKey: ["tasks", user],
     queryFn: async () => {
-      const res = await getAllTasks(user && user?.email);
+      const res = await getAllTasks(user?.email);
       return res;
     },
   });

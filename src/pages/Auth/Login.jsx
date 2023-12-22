@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -8,6 +8,8 @@ import { Helmet } from "react-helmet-async";
 export function Login() {
   const { userLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/dashboard/tasks";
   const handelLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -17,7 +19,7 @@ export function Login() {
     try {
       await userLogin(email, password);
       toast.success("Login Successfull.", { id });
-      navigate("/dashboard/tasks");
+      await navigate(from, { replace: true });
     } catch (error) {
       toast.error(error.message, { id });
     }

@@ -10,7 +10,7 @@ export const saveTask = async (taskInfo) => {
 
 //getting all task by user
 export const getAllTasks = async (email) => {
-    const { data } = await axiosSecure(`/tasks/${email}`);
+    const { data } = await axiosSecure(`/tasks?email=${email}`);
     return data;
 }
 

@@ -1,18 +1,14 @@
 import {
   Home,
-  LogOut,
   CalendarPlus,
   LayoutList,
   Bell,
   UserRoundCog,
 } from "lucide-react";
-import useAuth from "../../hooks/useAuth";
 import { Link, useLocation } from "react-router-dom";
 import useNotifications from "../../hooks/useNotifications";
 
 const Sidebar = () => {
-  const { user, logOut } = useAuth();
-
   const { notifications } = useNotifications();
 
   const location = useLocation();

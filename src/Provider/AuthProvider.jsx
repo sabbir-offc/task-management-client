@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        const userInfo = { email: currentUser.email };
+        const userInfo = { email: currentUser?.email };
         getToken(userInfo);
         setLoading(false);
       } else {
@@ -58,6 +58,7 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     });
+
     return () => {
       unSubscribe();
     };
@@ -72,7 +73,7 @@ const AuthProvider = ({ children }) => {
     updateUserInfo,
     socialSign,
   };
-  console.log(loading);
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

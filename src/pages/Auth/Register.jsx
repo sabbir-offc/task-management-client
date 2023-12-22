@@ -31,7 +31,7 @@ export function Register() {
       toast.success("Account created Successfully.", {
         id: toastId,
       });
-      navigate("/");
+      navigate("/dashboard/tasks");
     } catch (error) {
       toast.error(error.message, { id: toastId });
     }

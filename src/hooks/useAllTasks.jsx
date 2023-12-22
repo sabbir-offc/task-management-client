@@ -9,9 +9,9 @@ const useAllTasks = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["tasks"],
+    queryKey: ["tasks", user],
     queryFn: async () => {
-      const res = await getAllTasks(user?.email);
+      const res = await getAllTasks(user && user?.email);
       return res;
     },
   });

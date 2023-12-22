@@ -17,7 +17,7 @@ export function Login() {
     try {
       await userLogin(email, password);
       toast.success("Login Successfull.", { id });
-      navigate("/");
+      navigate("/dashboard/tasks");
     } catch (error) {
       toast.error(error.message, { id });
     }

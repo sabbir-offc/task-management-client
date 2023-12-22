@@ -11,10 +11,14 @@ import UpdateTask from "../pages/Dashboard/UpdateTask";
 import { getSingleTask } from "../api/user";
 import Notifications from "../pages/Dashboard/Notifications";
 import Profile from "../pages/Dashboard/Profile";
+import { Error } from "../pages/Error/Error";
+import AboutUsPage from "../pages/About Us/AboutUs";
+import Contact from "../pages/Contact/Contact";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -28,6 +32,14 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      {
+        path: "about-us",
+        element: <AboutUsPage />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
     ],
   },
   {
@@ -37,6 +49,7 @@ const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    errorElement: <Error />,
     children: [
       {
         path: "add-task",

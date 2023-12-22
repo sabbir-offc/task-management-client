@@ -3,6 +3,7 @@ import Loader from "../../components/shared/Loader";
 import useNotifications from "../../hooks/useNotifications";
 import { deleteNotification } from "../../api/user";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Notifications = () => {
   const { notifications, isLoading, refetch } = useNotifications();
@@ -17,6 +18,9 @@ const Notifications = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>Notifications | Tame Task</title>
+      </Helmet>
       <div className="container mx-auto  py-10">
         <div className="border-l-purple-500 border-l-4 px-3 py-2 mb-5 rounded-l-md text-center">
           <h1 className="text-2xl md:text-4xl text-left">Notifications</h1>

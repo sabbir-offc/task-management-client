@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export function Banner() {
+  const { user } = useAuth();
   return (
     <div className="relative w-full">
       <div className="relative isolate z-0 bg-white px-6 pt-14 lg:px-8">
@@ -33,20 +35,31 @@ export function Banner() {
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Embark on an organized journey with Task Management
+              Embark on an organized journey with Tame Task
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               {`Click 'Let's Explore' to seamlessly transition to the login page, unlocking a powerful Task Management Dashboard upon entry.`}
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-2">
-              <Link to={"/login"}>
-                <button
-                  type="button"
-                  className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                >
-                  {`Let's Explore`}
-                </button>
-              </Link>
+              {user?.email ? (
+                <Link to={"/dashboard/tasks"}>
+                  <button
+                    type="button"
+                    className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                  >
+                    {`Let's Explore`}
+                  </button>
+                </Link>
+              ) : (
+                <Link to={"/login"}>
+                  <button
+                    type="button"
+                    className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                  >
+                    {`Let's Explore`}
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </div>

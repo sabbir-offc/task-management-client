@@ -9,6 +9,7 @@ import TableHead from "../../components/Dashboard/Task/TableHead";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import useNotifications from "../../hooks/useNotifications";
+import { Helmet } from "react-helmet-async";
 
 const Todo = () => {
   const { tasks, refetch } = useAllTasks();
@@ -84,6 +85,9 @@ const Todo = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>All Tasks | Tame Task</title>
+      </Helmet>
       <div className="flex  flex-wrap justify-around p-5 gap-4">
         {statuses?.map((status, idx) => (
           <TableHead

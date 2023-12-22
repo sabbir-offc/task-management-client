@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div>
       <div>
-        <nav className="bg-white  shadow ">
+        <nav className="bg-white  ">
           <div className="px-8 mx-auto max-w-7xl">
             <div className="flex items-center justify-between h-16">
               <div className=" flex items-center">
@@ -20,7 +20,7 @@ const Navbar = () => {
                   <div className="flex items-baseline ml-10 space-x-4">
                     <a
                       className="text-gray-800  hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium"
-                      href="/#"
+                      href="/"
                     >
                       Home
                     </a>
@@ -56,7 +56,7 @@ const Navbar = () => {
                               aria-labelledby="options-menu"
                             >
                               <Link
-                                to={"/dashboard"}
+                                to={"/dashboard/tasks"}
                                 className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900  dark:hover:text-white dark:hover:bg-gray-600"
                                 role="menuitem"
                               >
